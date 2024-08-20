@@ -1,0 +1,44 @@
+# Compiled object files, static and dynamic libraries
+*.o
+*.obj
+*.a
+*.so
+*.dll
+*.dylib
+*.lib
+
+# Executables
+*.out
+*.exe
+*.app
+
+# Build directories
+/build/
+/bin/
+/lib/
+/obj/
+
+
+# VSCode specific files
+.vscode/
+
+# Logs
+*.log
+
+# Temporary files
+*.tmp
+*.swp
+*.swo
+
+# System-specific files
+.DS_Store
+Thumbs.db
+
+# CMake build files
+CMakeFiles/
+CMakeCache.txt
+cmake_install.cmake
+
+# Miscellaneous
+*.DS_Store
+*.directory
