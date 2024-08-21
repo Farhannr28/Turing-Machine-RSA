@@ -10,8 +10,8 @@ class RSA {
         const int P = 17;
         const int Q = 19;
         const int N = P * Q;
-        const int D = 173;
-        const int E = 5;
+        const int D = 59;
+        const int E = 83;
     public:
         RSA();
         static RSA& getInstance();
