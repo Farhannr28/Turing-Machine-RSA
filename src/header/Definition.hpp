@@ -11,16 +11,16 @@ class Definition {
         // input symbols : Alphanumeric
         // tape symbols : Up To 255 ASCII characters
         const int startState;
-        vector<State> acceptingStates;
+        vector<int> acceptingStates;
     public:
         Definition(int x);
         ~Definition();
         const static char BLANK_SYMBOL;
         vector<State> getStates() const;
         int getStartState() const;
-        vector<State> getAcceptingStates() const;
+        vector<int> getAcceptingStates() const;
         void addState(State s);
-        void addAcceptingState(State s);
+        void addAcceptingState(int s);
         bool isAcceptByHalt();
 };
 

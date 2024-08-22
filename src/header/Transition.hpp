@@ -8,6 +8,7 @@ class Transition {
         const bool isMoveRight;
     
     public:
+        Transition();
         Transition(int, char, bool);
         ~Transition();
         int getNextState() const;

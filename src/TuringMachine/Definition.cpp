@@ -16,7 +16,7 @@ int Definition::getStartState() const {
     return this->startState;
 }
 
-vector<State> Definition::getAcceptingStates() const {
+vector<int> Definition::getAcceptingStates() const {
     return this->acceptingStates;
 }
 
@@ -24,7 +24,7 @@ void Definition::addState(State s){
     this->states.push_back(s);
 }
 
-void Definition::addAcceptingState(State s){
+void Definition::addAcceptingState(int s){
     this->acceptingStates.push_back(s);
 }
 
