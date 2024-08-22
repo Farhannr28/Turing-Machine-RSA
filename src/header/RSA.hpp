@@ -2,6 +2,7 @@
 #define __RSA__
 
 #include <iostream>
+#include <vector>
 
 using namespace std;
 
@@ -17,6 +18,8 @@ class RSA {
         static RSA& getInstance();
         string naiveEncrypt(string input);
         string naiveDecrypt(string input);
+        vector<int> processInputEncrypt(string input);
+        string processInputDecrypt(vector<int> &p);
 };
 
 #endif
