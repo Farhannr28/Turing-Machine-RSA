@@ -62,7 +62,7 @@ void Emulator::elongateTape(){
 }
 
 /* BINARY VERSION */
-void Emulator::printTape(){
+void Emulator::printTape(int num, int total){
     int idx = this->finiteControlIndex;
     resetTextColor();
     for (int i=0; i<idx; i++){
@@ -74,14 +74,18 @@ void Emulator::printTape(){
     for (int i=idx+1; i<82; i++){
         cout << this->tape[i];
     }
-    cout << "  ";
     startTextRed();
+    cout << " State: ";
     cout << this->currentState;
-    resetTextColor();
-    cout << "\n";
+    startTextGreen();
+    cout << " [";
+    cout << num;
+    cout << "/";
+    cout << total;
+    cout << "]\n";
 }
 
-bool Emulator::run(){
+bool Emulator::run(bool print, int num, int total){
 
     //ios_base::sync_with_stdio(false);
 
@@ -98,11 +102,13 @@ bool Emulator::run(){
         nextState = this->getDefinition().getStates()[this->currentState].getTransitions().at(rs).getNextState();
         newSymbol = this->getDefinition().getStates()[this->currentState].getTransitions().at(rs).getNewSymbol();
         moveRight = this->getDefinition().getStates()[this->currentState].getTransitions().at(rs).getIsMoveRight();
+
+        if (print){
+            printTape(num, total);
+        }
+
         this->writeSymbol(newSymbol);
         this->moveFiniteControl(moveRight);
-
-        // printTape();
-
         this->changeCurrentState(nextState);
         rs = this->readSymbol();
 

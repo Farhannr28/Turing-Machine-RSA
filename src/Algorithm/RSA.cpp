@@ -22,54 +22,6 @@ RSA& RSA::getInstance(){
     return instance;
 }
 
-// vector<int> RSA::processInputEncrypt(string input){
-//     int p;
-//     int c;
-//     string temp = "";
-//     string y;
-//     for (char i : input){
-//         c = (char) i;
-//         y = to_string(c);
-//         temp += y.insert(0, 3 - y.length(), '0');
-//     }
-//     int sz = temp.length();
-
-//     vector<int> result;
-//     for (int i=0; i < (sz/2) * 2; i+=2){
-//         p = (temp[i] - '0') * 10 + (temp[i+1] - '0');
-//         result.push_back(p);
-//     }
-//     if (sz % 2 == 1){
-//         result.push_back(temp[sz-1] - '0');
-//     }
-
-//     return result;
-// }
-
-// string RSA::processInputDecrypt(vector<int> &p) {
-//     string temp="";
-//     string y;
-//     for (int i=0; i < (int) p.size()-1; i++){
-//         y = to_string(p[i]);
-//         temp += y.insert(0, 2 - y.length(), '0');
-//     }
-//     y = to_string(p[p.size()-1]);
-//     if (p.size() % 3 == 0 && p[p.size()-1] < 10){
-//         y.insert(0, 1, '0');
-//     }
-
-//     temp += y;
-
-//     vector<string> charGroups = Util::splitIntoGroupsOfThree(temp);
-//     string result="";
-//     int x;
-//     for (string s : charGroups){
-//         x = stoi(s);
-//         result = result + (char) x;
-//     }
-//     return result;
-// }
-
 vector<int> RSA::processInputEncrypt(string input){
     int c;
     string temp = "";
@@ -117,15 +69,18 @@ string RSA::naiveDecrypt(string input){
     return processInputDecrypt(pValues);
 }
 
-string RSA::turingEncrypt(string input){
+string RSA::turingEncrypt(string input, bool print){
     vector<int> v = processInputEncrypt(input);
     int c;
     string y;
     string result = "";
-    for (int p : v) {
+    int p;
+    int sz = v.size();
+    for (int i=0; i<sz; i++) {
+        p = v[i];
         vector<char> t = definer.createInitialTape(p);
         this->emulator.setInitialTape(t);
-        if (this->emulator.run()){
+        if (this->emulator.run(print, i, sz)){
             c = this->definer.readTapeResult(this->emulator.getTape());
             y = to_string(c);
             result = result + y.insert(0, 2 - y.length(), '0');
@@ -136,16 +91,19 @@ string RSA::turingEncrypt(string input){
     return result;
 }
 
-string RSA::turingDecrypt(string input){
+string RSA::turingDecrypt(string input, bool print){
     vector<string> groups = Util::splitIntoGroupsOfTwo(input);
     vector<int> pValues;
     int c;
     vector<char> t;
-    for (string g : groups){
+    string g;
+    int sz = groups.size();
+    for (int i=0; i<sz; i++){
+        g = groups[i];
         c = stoi(g);
         t = definer.createInitialTape(c);
         this->emulator.setInitialTape(t);
-        if (this->emulator.run()){
+        if (this->emulator.run(print, i, sz)){
             pValues.push_back(this->definer.readTapeResult(this->emulator.getTape()));
         } else {
             return "Error running Turing Machine";

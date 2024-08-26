@@ -23,8 +23,8 @@ class RSA {
         static RSA& getInstance();
         string naiveEncrypt(string input);
         string naiveDecrypt(string input);
-        string turingEncrypt(string input);
-        string turingDecrypt(string input);
+        string turingEncrypt(string input, bool print);
+        string turingDecrypt(string input, bool print);
         vector<int> processInputEncrypt(string input);
         string processInputDecrypt(vector<int> &p);
 };

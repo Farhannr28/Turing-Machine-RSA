@@ -19,6 +19,10 @@ void startTextBlue(){
     cout << "\033[1;34m";
 }
 
+void startTextMagenta(){
+    cout << "\033[1;35m";
+}
+
 void startTextCyan(){
     cout << "\033[1;36m";
 }

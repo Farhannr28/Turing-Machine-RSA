@@ -23,8 +23,8 @@ class Emulator {
         void writeSymbol(char);
         void setInitialTape(vector<char>&);
         void elongateTape(); // Fill tape until capacity with BLANK_SYMBOL when finite control reaches end
-        void printTape();
-        bool run();
+        void printTape(int, int);
+        bool run(bool, int, int);
 };
 
 #endif
