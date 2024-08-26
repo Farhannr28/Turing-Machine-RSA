@@ -19,12 +19,12 @@ all: $(TARGET)
 
 # Rule to link the object files and create the binary
 $(TARGET): $(OBJS)
-	$(CXX) $(OBJS) -o $(TARGET)
+	@$(CXX) $(OBJS) -o $(TARGET)
 
 # Rule to compile each source file into an object file
 $(BUILD_DIR)/%.o: $(SRC_DIR)/%.cpp
 	@mkdir -p $(dir $@)
-	$(CXX) $(CXXFLAGS) -c $< -o $@
+	@$(CXX) $(CXXFLAGS) -c $< -o $@
 
 # Clean rule to remove build artifacts
 clean:

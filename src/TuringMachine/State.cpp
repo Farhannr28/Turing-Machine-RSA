@@ -1,8 +1,10 @@
 #include "../header/State.hpp"
 
+#include <sstream>
+
 int State::stateCount = 0;
 
-State::State() : stateName("q" + stateCount) {
+State::State() : stateName("q" + to_string(stateCount)) {
     stateCount++;
 }
 

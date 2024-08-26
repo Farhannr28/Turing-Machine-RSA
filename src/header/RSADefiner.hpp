@@ -15,11 +15,15 @@ class RSADefiner {
         int D;
         int E;
     public:
-        RSADefiner(int, int, int, int);
+        RSADefiner();
         ~RSADefiner();
+        void setP(int x);
+        void setQ(int x);
+        void setD(int x);
+        void setE(int x);
         void define(Definition&);
-        vector<char>& createInitialTape(vector<int>&, bool);
-        vector<int> readTapeResult(vector<char>&);
+        vector<char> createInitialTape(int);
+        int readTapeResult(vector<char>&);
 };
 
 #endif

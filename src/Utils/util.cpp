@@ -9,3 +9,11 @@ vector<string> Util::splitIntoGroupsOfThree(const string& input) {
     }
     return groups;
 }
+
+vector<string> Util::splitIntoGroupsOfTwo(const string& input) {
+    vector<string> groups;
+    for (size_t i = 0; i < input.length(); i += 2) {
+        groups.push_back(input.substr(i, 2));
+    }
+    return groups;
+}

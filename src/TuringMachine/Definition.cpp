@@ -4,7 +4,7 @@
 
 const char Definition::BLANK_SYMBOL = 'B';
 
-Definition::Definition(int _startState) : startState(_startState) {}
+Definition::Definition() {}
 
 Definition::~Definition(){}
 
@@ -18,6 +18,10 @@ int Definition::getStartState() const {
 
 vector<int> Definition::getAcceptingStates() const {
     return this->acceptingStates;
+}
+
+void Definition::setStartState(int s) {
+    this->startState = s;
 }
 
 void Definition::addState(State s){

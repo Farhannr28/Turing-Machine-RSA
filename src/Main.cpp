@@ -5,10 +5,19 @@
 using namespace std;
 
 int main(){
-    string temp;
-    temp = RSA::getInstance().naiveEncrypt("We dont wanna see you in the presidency chair no more!");
-    cout << temp << "\n";
-    temp = RSA::getInstance().naiveDecrypt(temp);
-    cout << temp << "\n";
+    string naive;
+    string turing;
+    string INPUT = "abc";
+    cout << "NAIVE: " << "\n";
+    naive = RSA::getInstance().naiveEncrypt(INPUT);
+    cout << naive << "\n";
+    naive = RSA::getInstance().naiveDecrypt(naive);
+    cout << naive << "\n";
+    cout << "\n";
+    cout << "TURING: " << "\n";
+    turing = RSA::getInstance().turingEncrypt(INPUT);
+    cout << turing << "\n";
+    turing = RSA::getInstance().turingDecrypt(turing);
+    cout << turing << "\n";
     return 0;
 }

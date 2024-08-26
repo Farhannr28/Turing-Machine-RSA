@@ -10,6 +10,7 @@ class Util {
 
     public:
         static vector<string> splitIntoGroupsOfThree(const string& input);
+        static vector<string> splitIntoGroupsOfTwo(const string& input);
 };
 
 #endif

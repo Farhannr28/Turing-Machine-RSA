@@ -1,13 +1,12 @@
+#include "../header/printColor.hpp"
 #include "../header/Emulator.hpp"
 #include "../header/Definition.hpp"
 
-const int Emulator::initialTapeSize = 6500;
-
-Emulator::Emulator(int _startState) : definition(_startState), tape(Emulator::initialTapeSize, Definition::BLANK_SYMBOL) {}
+Emulator::Emulator() : definition(), tape() {}
 
 Emulator::~Emulator(){}
 
-Definition Emulator::getDefinition() const {
+Definition& Emulator::getDefinition() {
     return this->definition;
 }
 
@@ -19,7 +18,7 @@ int Emulator::getFiniteControlIndex() const {
     return this->finiteControlIndex;
 }
 
-vector<char> Emulator::getTape() const {
+vector<char>& Emulator::getTape() {
     return this->tape;
 }
 
@@ -34,9 +33,9 @@ void Emulator::changeCurrentState(int q){
 void Emulator::moveFiniteControl(bool right){
     if (right){
         this->finiteControlIndex++;
-        if (finiteControlIndex == (int) this->tape.size()){
-            elongateTape();
-        }
+        // if (finiteControlIndex == (int) this->tape.size() - 1){
+        //     elongateTape();
+        // }
     } else {
         this->finiteControlIndex--;
     }
@@ -47,9 +46,10 @@ void Emulator::writeSymbol(char s){
 }
 
 void Emulator::setInitialTape(vector<char>& v){
+    this->tape.clear();
     int sz = v.size();
-    for (int i=0; i<sz; i++){
-        this->tape[i] = v[i];
+    for (int i=0; i<sz; i++) {
+        this->tape.push_back(v[i]);
     }
 }
 
@@ -61,7 +61,30 @@ void Emulator::elongateTape(){
     }
 }
 
+/* BINARY VERSION */
+void Emulator::printTape(){
+    int idx = this->finiteControlIndex;
+    resetTextColor();
+    for (int i=0; i<idx; i++){
+        cout << this->tape[i];
+    }
+    startTextBlue();
+    cout << this->tape[idx];
+    resetTextColor();
+    for (int i=idx+1; i<82; i++){
+        cout << this->tape[i];
+    }
+    cout << "  ";
+    startTextRed();
+    cout << this->currentState;
+    resetTextColor();
+    cout << "\n";
+}
+
 bool Emulator::run(){
+
+    //ios_base::sync_with_stdio(false);
+
     char rs;
     int nextState;
     char newSymbol;
@@ -69,19 +92,24 @@ bool Emulator::run(){
 
     this->currentState = this->definition.getStartState();
     this->finiteControlIndex = 0;
+    rs = this->readSymbol();
 
     while (this->getDefinition().getStates()[this->currentState].getTransitions().count(rs) > 0){
-        rs = this->readSymbol();
         nextState = this->getDefinition().getStates()[this->currentState].getTransitions().at(rs).getNextState();
         newSymbol = this->getDefinition().getStates()[this->currentState].getTransitions().at(rs).getNewSymbol();
         moveRight = this->getDefinition().getStates()[this->currentState].getTransitions().at(rs).getIsMoveRight();
         this->writeSymbol(newSymbol);
         this->moveFiniteControl(moveRight);
+
+        // printTape();
+
         this->changeCurrentState(nextState);
+        rs = this->readSymbol();
+
     }
 
     if (this->getDefinition().isAcceptByHalt()){
-        return true; // Halt
+        return this->currentState == 49 && this->readSymbol() == 'Y'; // Halt
     } else {
         for (int as : this->getDefinition().getAcceptingStates()){
             if (as == this->currentState){

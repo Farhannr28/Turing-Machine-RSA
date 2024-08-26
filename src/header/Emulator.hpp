@@ -11,18 +11,19 @@ class Emulator {
         vector<char> tape;
     public:
         static const int initialTapeSize;
-        Emulator(int);
+        Emulator();
         ~Emulator();
-        Definition getDefinition() const;
+        Definition& getDefinition();
         int getCurrentState() const;
         int getFiniteControlIndex() const;
-        vector<char> getTape() const;
+        vector<char>& getTape();
         char readSymbol();
         void changeCurrentState(int);
         void moveFiniteControl(bool);
         void writeSymbol(char);
         void setInitialTape(vector<char>&);
         void elongateTape(); // Fill tape until capacity with BLANK_SYMBOL when finite control reaches end
+        void printTape();
         bool run();
 };
 
